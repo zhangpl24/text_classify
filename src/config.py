@@ -10,20 +10,20 @@ class Paths:
     train_file: str = dataset_dir + "/train.txt"
     valid_file: str = dataset_dir + "/validation.txt"
     test_file: str = dataset_dir + "/test.txt"
-    word2vec_file: str = dataset_dir + "/wiki_word2vec_50.bin"
+    word2vec: str = dataset_dir + "/wiki_word2vec_50.bin"
     
 
 
 @dataclass(frozen=True)
 class TrainConfig:
     seed: int = 42
-    batch_size: int = 64
-    learning_rate: float = 1e-3
+    batch_size: int = 50
+    learning_rate: float = 1e-5
     weight_decay: float = 0.0
-    num_epochs: int = 10
+    num_epochs: int = 100
     max_len: int = 200
     log_every: int = 50
-    device: str = "cpu"
+    
 
 
 @dataclass(frozen=True)
@@ -31,7 +31,6 @@ class ModelConfig:
     model_type: Literal["cnn", "rnn"] = "cnn"
     embed_dim: int = 50
     num_classes: int = 2
-    dropout: float = 0.5
 
     cnn_kernel_sizes: tuple[int, ...] = (3, 4, 5)
     cnn_num_channels: int = 100
