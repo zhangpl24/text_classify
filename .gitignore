@@ -1,0 +1,9 @@
+Dataset/
+
+*.docx
+
+.trae/
+.DS_Store
+
+*/__pycache/
+__pycache__/
