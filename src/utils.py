@@ -2,12 +2,17 @@ from __future__ import annotations
 
 import os
 import random
+import torch
+import numpy as np
 from dataclasses import dataclass
 from pathlib import Path
 
 
 def set_seed(seed: int) -> None:
     random.seed(seed)
+    np.random.seed(seed) 
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
     os.environ["PYTHONHASHSEED"] = str(seed)
 
 

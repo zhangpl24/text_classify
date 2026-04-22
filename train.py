@@ -3,9 +3,6 @@ from __future__ import annotations
 import argparse
 from typing import Any, Literal
 
-from numpy import rec
-from torch.optim import optimizer
-
 from src.config import AppConfig
 from src.data import load_examples, TextDataset, load_word2vec
 from src.metrics import accuracy, macro_f1
@@ -67,7 +64,7 @@ def train_one_epoch(
             loss, current = loss.item(), (batch + 1) * len(X)
             print(f"loss: {loss:>7f},   [{current:>5d}]/{size:>5d}")
 
-@torch.no_grad
+@torch.no_grad()
 def evaluate(model, dataloader, device):
     model.eval()
 
@@ -106,7 +103,7 @@ def main() -> None:
     w2v = load_word2vec(cfg.paths.word2vec)
     train_dataset, val_dataset, test_dataset = load_dataset(cfg, w2v)
 
-    train_dataloader = DataLoader(train_dataset, cfg.train.batch_size)
+    train_dataloader = DataLoader(train_dataset, cfg.train.batch_size, shuffle=True)
     val_dataloader = DataLoader(val_dataset, cfg.train.batch_size)
     test_dataloader = DataLoader(test_dataset, cfg.train.batch_size)
 

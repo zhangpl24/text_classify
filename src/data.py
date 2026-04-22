@@ -1,12 +1,12 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Iterable, Protocol
 
 from torch.utils.data import Dataset
 from gensim.models import KeyedVectors
 
 from torch import Tensor,tensor
+import numpy
 
 @dataclass(frozen=True)
 class Example:
@@ -19,7 +19,7 @@ def load_word2vec(path: str) -> KeyedVectors:
 
 def load_examples(path: str, w2v: KeyedVectors, max_len : int) -> list[Example]:
     examples = []
-    unk_vec = [0.0] * w2v.vector_size
+    unk_vec = numpy.zeros(w2v.vector_size, dtype=numpy.float32)
 
     with open(path, "r", encoding="utf-8") as f:
         for line in f:
@@ -38,6 +38,7 @@ def load_examples(path: str, w2v: KeyedVectors, max_len : int) -> list[Example]:
                     for _ in range(max_len - len(input)):
                         input.append(unk_vec)
 
+                input = numpy.array(input, dtype=numpy.float32)
                 input = tensor(input)
                 examples.append(Example(in_features=input, label=int(label)))
     return examples

@@ -18,10 +18,10 @@ class Paths:
 class TrainConfig:
     seed: int = 42
     batch_size: int = 50
-    learning_rate: float = 1e-5
+    learning_rate: float = 1e-3
     weight_decay: float = 0.0
-    num_epochs: int = 100
-    max_len: int = 200
+    num_epochs: int = 5
+    max_len: int = 50
     log_every: int = 50
     
 

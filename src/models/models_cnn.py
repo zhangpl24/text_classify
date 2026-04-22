@@ -20,8 +20,8 @@ class TextCNNModel(nn.Module):
     def __init__(self, config: TextCNNConfig) -> None:
         super().__init__()
         self.config = config
-        self.softmax = nn.Softmax(dim=1)
         self.linear = nn.Linear(config.num_filters * len(config.kernel_sizes),config.num_classes)
+        self.relu = nn.ReLU()
         self.convs = nn.ModuleList(
             [nn.Conv2d(
                 in_channels=1,
@@ -45,6 +45,8 @@ class TextCNNModel(nn.Module):
 
             out = out.squeeze(-1)
             # (batch_size, out_channels, after_conv)
+
+            out = self.relu(out)
 
             out = out.max(dim=2).values
             # (batch_size, out_channels)
